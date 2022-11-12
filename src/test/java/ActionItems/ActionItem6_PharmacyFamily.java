@@ -65,6 +65,7 @@ public class ActionItem6_PharmacyFamily extends ReusableAnnotationsTestNG {
         ReusableActionLogger.submitAction(driver,"//[@class='btn btn-primary']",logger,"zipcodeSubmit");
         Thread.sleep(3000);
         driver.close();
+        //comment
     }
 
 
