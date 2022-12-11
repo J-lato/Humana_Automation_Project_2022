@@ -18,6 +18,7 @@ public class T1_screenshotYahoo extends ReusableAnnotationsTestNG {
         boolean isSignInChecked = driver.findElement(By.xpath("//*[@id= 'persistent']")).isSelected();
         System.out.println("The checkbox check condition is: " + isSignInChecked);
         logger.log(LogStatus.INFO,"The checkbox check condition is: " + isSignInChecked);
+
     }//end of test 1
 
 

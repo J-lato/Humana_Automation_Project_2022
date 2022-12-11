@@ -3,6 +3,11 @@ package ActionItems;
 import Reusable_Library.ReusableActionLogger;
 import Reusable_Library.ReusableActions;
 import Reusable_Library.ReusableAnnotationsTestNG;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -11,11 +16,15 @@ public class ActionItem6_MedicareMedicaid extends ReusableAnnotationsTestNG {
         driver.navigate().to("https://www.humana.com");
         Thread.sleep(4000);
         //handle popup
-        try{  ReusableActionLogger.clickAction(driver,"//*[@aria-label='No thanks']",logger,"noThanksPopup");}
+        WebDriverWait wait = new WebDriverWait(driver,10);
+       try{ boolean popUp = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[@aria-label='No thanks']")))).isDisplayed();
+        if (popUp){
+            ReusableActionLogger.clickAction(driver,"//*[@aria-label='No thanks']",logger,"noThanksPopup");}}
        catch(Exception e){
-            System.out.println("popUp not found");}
+           System.out.println("popUp Not Displayed" +e);
+       }
     }
-    @Test(priority = 1) public void tc010102_MedicareZipSearch() throws InterruptedException {
+    @Test() public void tc010102_MedicareZipSearch() throws InterruptedException {
 //        driver.navigate().to("https://www.humana.com");
 //        //handle popup
 //      try{  ReusableActionLogger.clickAction(driver,"//*[@aria-label='No thanks']",logger,"noThanksPopup");}
@@ -24,7 +33,7 @@ public class ActionItem6_MedicareMedicaid extends ReusableAnnotationsTestNG {
         //hover over Shop For Plans
         ReusableActionLogger.mouseHover(driver,"//*[@data-parent='parent']",logger,"shopForPlansMenu");
         //click Shop Medicare
-        ReusableActionLogger.clickAction(driver,"//*[contains(text(), 'Shop Medicare')]",logger,"clickShopMedicare");
+        ReusableActionLogger.clickAction(driver,"//*[contains(text(), 'Shop Medicare Advantage plans')]",logger,"clickShopMedicare");
         //scroll to zip search field
         ReusableActionLogger.scrollByView(driver,"//*[@name='zipInput']",logger,"zipInputScroll");
         Thread.sleep(3000);
@@ -34,6 +43,9 @@ public class ActionItem6_MedicareMedicaid extends ReusableAnnotationsTestNG {
         //submit
         ReusableActionLogger.clickAction(driver,"//*[@type='submit']",logger,"submitZip");
         Thread.sleep(4000);
+        //id='fsrInvite
+        //click skip to plans
+        ReusableActionLogger.clickActionByIndex(driver, "//*[@class='text-align-left']",1,logger,"clickSkiptoPlans");
     }
     @Test(dependsOnMethods = "tc010102_MedicareZipSearch")public void tc020402_MedicaidEnrollment() throws InterruptedException {
         //hover over Shop For Plans
@@ -46,15 +58,17 @@ public class ActionItem6_MedicareMedicaid extends ReusableAnnotationsTestNG {
         //click the first link
         ReusableActionLogger.clickActionByIndex(driver,"//*[contains(text(), 'Florida State Enrollment Site (AHCA)')]",0,logger,"flLinkClick");
         Thread.sleep(4000);
-        ReusableActionLogger.switchToTabByIndex(driver,1,"FloridaEnrollmentTab");
+        ReusableActionLogger.switchToTabByIndex(driver,1,"FloridaEnrollmentTab"); //// switch back to first tab
         //handle popUp
         ReusableActionLogger.clickAction(driver,"//*[@id='btnEligNo']",logger,"FloridaPopup");
         Thread.sleep(1000);
         //click on enrolling in healthplan
         ReusableActionLogger.clickAction(driver, "//*[contains(text(), 'Enrolling in a Health Plan')]",logger,"clicking Florida Enrollment Link");
         driver.close();
+        //switch back to first tab
+        ReusableActionLogger.switchToTabByIndex(driver,0,"FloridaEnrollmentTab");
     }
-    @Test(priority = 3)public void tc020503_FilterDoctors() throws InterruptedException {
+    @Test(dependsOnMethods = "tc020402_MedicaidEnrollment")public void tc020503_FilterDoctors() throws InterruptedException {
         //hover over Shop For Plans
         ReusableActionLogger.mouseHover(driver,"//*[@data-parent='parent']",logger,"shopForPlansMenu");
         //click Enrollment
@@ -73,7 +87,7 @@ public class ActionItem6_MedicareMedicaid extends ReusableAnnotationsTestNG {
         Thread.sleep(3000);
         try{  ReusableActionLogger.clickAction(driver,"//*[@aria-label='No thanks']",logger,"noThanksPopup");}
         catch(Exception e){
-            System.out.println("popUp not found");}
+            System.out.println("popUp not found"+e);}
 
         ReusableActionLogger.clickAction(driver,"//*[@id='nucleus-radio-button-17-label']",logger,"selectCoverage");
         ReusableActionLogger.clickAction(driver,"//*[@id='nucleus-radio-button-20-label']",logger,"CoverageYear");
@@ -86,6 +100,5 @@ public class ActionItem6_MedicareMedicaid extends ReusableAnnotationsTestNG {
         //click on specialty
         ReusableActions.clickAction(driver, "//*[@id='ProviderSpecialty3)]","clicking Allergist Filter");
         Thread.sleep(2000);
-        driver.close();
     }
 }

@@ -128,6 +128,7 @@ public class ReusableActionLogger {
             }catch(Exception e){
                 System.out.println("unable to get dropDown : " + elementName + "for reason: " + e);
                 logger.log(LogStatus.FAIL,"Unable to get dropdown element: " + elementName + " for reason: " + e);
+                getScreenShot(driver, "text",logger);
 
             }//end of catch
         }//end of selectByTextAction

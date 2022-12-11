@@ -133,5 +133,15 @@ public class ReusableActions {
        catch(Exception e) {
            System.out.println("Unable to scroll to element: "+ elementName+ "Because: "+ e);}
     }//end of scrollByView
+    public static void scrollByPixel(WebDriver driver, int X, int Y) throws InterruptedException {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        Thread.sleep(2000);
+        try{String scroll = "scroll(" + String.valueOf(X) + "," + String.valueOf(Y) + ")";
+        jse.executeScript(scroll);}
+        catch(Exception e) {
+            System.out.println("Unable to scroll by pixel because: "+e);
+        }
+
+    }
 
 }//end of class

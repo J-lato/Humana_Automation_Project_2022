@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Regression">
+    <test name="Humana Test Scenarios" preserve-order="true">
+        <classes>
+            <class name="ActionItems.ActionItem6_MedicareMedicaid"/>
+            <class name="ActionItems.ActionItem6_PharmacyFamily"/>
+        </classes>
+    </test>
+</suite>
