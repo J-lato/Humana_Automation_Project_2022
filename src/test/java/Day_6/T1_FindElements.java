@@ -3,6 +3,7 @@ package Day_6;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -22,7 +23,8 @@ public class T1_FindElements {
         //go to google page
         driver.navigate().to("https://www.yahoo.com");
 
-        driver.findElements(By.xpath("//*[contains@class, '_yb_sc88r']")).get(1).click();
+        WebElement search= driver.findElement(By.xpath("//*[contains(@class, '_yb_nuzqf')]"));
+        search.sendKeys("world cup\n");
         //capture the search result and print it
         String searchResult = driver.findElement(By.xpath("//*[@id='result-stats']")).getText();
         //extract out the number and print the search number only
