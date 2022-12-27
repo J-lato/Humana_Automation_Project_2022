@@ -12,7 +12,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ReusableActionLogger {
 
@@ -59,6 +61,9 @@ public class ReusableActionLogger {
             } catch (Exception e) {
                 System.out.println("Unable to click on element: " + elementName + " for reason: " + e);
                 logger.log(LogStatus.FAIL,"Unable to click on element: " + elementName + " for reason: " + e);
+                // String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+                // reports = new ExtentReports("src/main/java/HTML_Report/Automation_Report" + timeStamp + ".html",false)
+
             }
         }//end of click action by index method
 
@@ -140,18 +145,23 @@ public class ReusableActionLogger {
         }//end of switchToTabsByIndex
     public static void getScreenShot(WebDriver driver, String imageName, ExtentTest logger) {
         try {
-            String fileName = imageName + ".png";
-            String directory = null;
-            String snPath = null;
-            directory = "src/main/java/HTML_Report/Screenshots/";
-            snPath = "Screenshots//";
+            SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMMyyyy HH:mm:ss");
+            Date date = new Date();
+            String actualDate = dateFormat.format(date);
+            String fileName = imageName +date+ ".png";
+            String directory = "src/main/java/HTML_Report/Screenshots/";
+            String snPath = "Screenshots//";
+
+
+
+
             File sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(sourceFile, new File(directory + fileName));
             //String imgPath = directory + fileName;
             String image = logger.addScreenCapture(snPath + fileName);
-            logger.log(LogStatus.FAIL, "", image);
+            logger.log(LogStatus.INFO, "", image);
         } catch (Exception e) {
-            logger.log(LogStatus.FAIL, "Error Occured while taking SCREENSHOT!!!");
+            logger.log(LogStatus.FAIL, "Error Occurred while taking SCREENSHOT!!!");
             e.printStackTrace();
         }
     }//end of getScreenshot method

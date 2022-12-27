@@ -23,6 +23,8 @@ public class ReusableAnnotationsTestNG {
     public void setTheDriver(){
         driver = ReusableActions.setUpDriver();
         reports= new ExtentReports("src/main/java/HTML_Report/Automation_Report.html",true);
+        // String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        // reports = new ExtentReports("src/main/java/HTML_Report/Automation_Report" + timeStamp + ".html",false)
 
     }//end of beforesuite
     @BeforeMethod

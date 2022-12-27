@@ -12,7 +12,7 @@ public class basicPoM {
 
 
     public basicPoM(WebDriver driver){
-        this.driver = driver;
+        driver = this.driver;
     }
 
 
